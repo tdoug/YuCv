@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>YouTube To MP3 Converter</title>
+	<style>
+		body {
+			position: relative;
+			margin: 25px;
+			font-family: Georgia;
+		}
+		#download_progress_area, #convert_progress_area {
+			display: none;
+		}
+		#download_progress_bar {
+			display: block;
+			width: 0%;
+			background-color: green;
+			border: dashed 1px;
+			color: black;
+			text-align: center;
+		}
+		#download_progress_pct {
+			position: relative;
+			vertical-align: middle;
+			font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+			margin:3px;
+			color:white;
+		}
+	</style>
+</head>
+<body>
+	<h3>YouTube to MP3 Converter</h3>
+	<form method='post' action='/convert'>
+		<input placeholder="Paste a YouTube URL" name="url" style="position: relative; width:89%"
+		onChange="this.form.submit();startDownload()">
+	</form>
+	<div id='download_progress_area'>
+		<h3>Downloading...</h3>
+		<div id='download_progress_bar'>
+			<div id='download_progress_pct'></div>
+		</div>
+	</div>
+	<div id='convert_progress_area'>
+		<h3>Converting...</h3>
+		<div id='convert_progress_timemark'></div>
+	</div>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io('http://localhost:3000')
+	  socket.on('download', function(data){
+	  	document.getElementById("download_progress_bar").style.width = data.pct - 1 + '%'
+	  	document.getElementById("download_progress_bar").style.fontSize = data.pct + 15 + 'px'
+	  	document.getElementById("download_progress_bar").style.height = data.pct + 25 + 'px'
+	  	document.getElementById("download_progress_pct").style.line_height = data.pct + 25 + 'px'
+	  	document.getElementById("download_progress_pct").innerHTML = data.pct + '%'
+	  })
+	  socket.on('convert', function(data){
+	  	document.getElementById("convert_progress_area").style.display = 'block'
+	  	document.getElementById("convert_progress_timemark").innerHTML = data.timemark
+	  })
+	  function startDownload () {
+	  	document.getElementById("download_progress_area").style.display = 'block'
+	  }
+	</script>
+</body>
+</html>
