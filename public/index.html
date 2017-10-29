@@ -30,9 +30,9 @@
 </head>
 <body>
 	<h3>YouTube to MP3 Converter</h3>
-	<form method='post' action='/convert'>
-		<input placeholder="Paste a YouTube URL" name="url" style="position: relative; width:89%"
-		onChange="this.form.submit();startDownload()">
+	<form method='post' action='/convert' id='convert_form'>
+		<input placeholder="Paste a YouTube URL" name="url" id='url' style="position: relative; width:89%"
+		onChange="checkUrl()">
 	</form>
 	<div id='download_progress_area'>
 		<h3>Downloading...</h3>
@@ -58,8 +58,19 @@
 	  	document.getElementById("convert_progress_area").style.display = 'block'
 	  	document.getElementById("convert_progress_timemark").innerHTML = data.timemark
 	  })
+	  function checkUrl() {
+	  	var url = document.getElementById("url").value
+	  	var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+	    if(url.match(p)){
+	        startDownload()
+	        return true
+	    }
+	    alert("This is not a valid URL")
+	    document.getElementById("url").value = ""
+	  }
 	  function startDownload () {
 	  	document.getElementById("download_progress_area").style.display = 'block'
+	  	document.getElementById("convert_form").submit()
 	  }
 	</script>
 </body>
