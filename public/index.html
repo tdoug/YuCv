@@ -46,7 +46,7 @@
 	</div>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
-	  var socket = io('http://localhost:3000')
+	  var socket = io('http://'+window.location.hostname+':3000')
 	  socket.on('download', function(data){
 	  	document.getElementById("download_progress_bar").style.width = data.pct - 1 + '%'
 	  	document.getElementById("download_progress_bar").style.fontSize = data.pct + 15 + 'px'

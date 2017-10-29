@@ -6,8 +6,8 @@ var http = require('http').Server(app)
 var io = require('socket.io')(http)
 
 var bodyParser = require('body-parser')
-var queryString = require("queryString")
-var fetch = require('node-fetch')
+var queryString = require("query-string")
+
 var ffmpeg = require('fluent-ffmpeg')
 var youtubedl = require('youtube-dl')
 
@@ -45,7 +45,6 @@ app.post('/convert', function(req, res) {
 		    .noVideo()
 		    .toFormat('mp3')
 		    .on('progress', function(progress) {
-		    	console.log(progress)
 			   io.emit('convert', { timemark: progress.timemark });
 			 })
 		    .on('end', function() {
