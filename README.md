@@ -3,7 +3,7 @@ YuCv is a simple Node-based utility that converts YouTube video URLs into MP3 fi
 
 # Setup
 1.  Clone the branch
-2.  Install ffmpeg on your OS
+2.  Install [ffmpeg](http://www.ffmpeg.org) on your OS
 3.  `npm install`
 4.  `node start.js`
 
